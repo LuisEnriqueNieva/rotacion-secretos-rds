@@ -1,0 +1,19 @@
+org: luisnieva
+service: rotacion-secretos-rds
+
+provider:
+  name: aws
+  runtime: python3.13
+  memorySize: 1024
+  timeout: 30
+  iam:
+    role: arn:aws:iam::800260961123:role/LabRole
+
+functions:
+  rotar:
+    handler: RotarPasswords.lambda_handler
+    package:
+      include:
+        - ./**
+    events:
+      - schedule: rate(10 minutes)
